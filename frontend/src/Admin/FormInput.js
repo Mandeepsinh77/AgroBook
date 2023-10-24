@@ -1,12 +1,21 @@
 // import "./FormInput.module.css";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./App.css"
 import swal from "sweetalert";
+import { useContext } from 'react';
+import { AppState } from "../App.js";
 
-const FormInput = () =>{
+const FormInput = () => {
+    
+    const useAppState = useContext(AppState);
+
+    console.log("FormINput")
+    console.log(useAppState.UserId)
+
+
     const [formData, setFormData] = useState(
         {
-            shopkeeperid: "",
+            shopkeeperid: useAppState.UserId,
             firstname: "",
             middlename: "",
             lastname: "",
@@ -20,51 +29,51 @@ const FormInput = () =>{
 
         }
     );
-   const [currentDate,setCurrentDate] = useState(new Date());
+    const [currentDate, setCurrentDate] = useState(new Date());
 
     const handleSubmit = async (e) => {
         const url = "http://localhost:4000/add/createcustomer";
-        e.preventDefault();    
+        e.preventDefault();
         try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          
-          if (response.status === 200) {
-            // Customer added successfully
-            swal({
-                title: "Customer Added Successfully",
-                icon: "success",
-                button: false,
-                timer: 3000
-            })
-            // Clear the form
-            setFormData({
-              shopkeeperid: "",
-              firstname: "",
-              middlename: "",
-              lastname: "",
-              address: "",
-              city: "",
-              pincode: "",
-              state: "",
-              country: "",
-              email: "",
-              phoneno: ""
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
-          } else {
-            // Handle errors if necessary
-            swal({
-                title: "Error Adding Customer",
-                icon: "error",
-                button: false,
-                timer: 3000
-            })
-          }
+
+            if (response.status === 200) {
+                // Customer added successfully
+                swal({
+                    title: "Customer Added Successfully",
+                    icon: "success",
+                    button: false,
+                    timer: 3000
+                })
+                // Clear the form
+                setFormData({
+                    shopkeeperid: useAppState.UserId,
+                    firstname: "",
+                    middlename: "",
+                    lastname: "",
+                    address: "",
+                    city: "",
+                    pincode: "",
+                    state: "",
+                    country: "",
+                    email: "",
+                    phoneno: ""
+                });
+            } else {
+                // Handle errors if necessary
+                swal({
+                    title: "Error Adding Customer",
+                    icon: "error",
+                    button: false,
+                    timer: 3000
+                })
+            }
         } catch (error) {
             swal({
                 title: `Internal Server Error ${error}`,
@@ -73,19 +82,19 @@ const FormInput = () =>{
                 timer: 3000
             })
         }
-      }
+    }
 
-    return(  
+    return (
         <>
-       <div className="customer_form">
+            <div className="customer_form">
                 <form action="" className="customer_form_details ml-12" onSubmit={handleSubmit}>
                     <h3 className="customer_head">Customer Details</h3>
                     <div className="my_form" id="mytable">
                         <div className="form-row">
                             <label htmlFor="adding_date">Date: </label> <br />
-                            <input type="" name="adding_date" id=""  value={currentDate.toDateString()} required/>
+                            <input type="" name="adding_date" id="" value={currentDate.toDateString()} required />
                         </div>
-                        <div className="form-row">
+                        {/* <div className="form-row">
                             <label htmlFor="shopkeeper_id">Shopkeeper ID:</label><br />
                             <input
                                 type="text"
@@ -96,7 +105,7 @@ const FormInput = () =>{
                                 placeholder="Enter Your ID"
                                 required
                             />
-                        </div>
+                        </div> */}
 
                         <div className="form-row">
                             <label htmlFor="name">Name: </label><br />
@@ -110,7 +119,7 @@ const FormInput = () =>{
                                 placeholder="Firstname"
                                 required
                             />
-                           <input
+                            <input
                                 type="text"
                                 id="middlename"
                                 name="middlename"
@@ -119,7 +128,7 @@ const FormInput = () =>{
                                 placeholder="Middlename"
                                 required
                             />
-                           <input
+                            <input
                                 type="text"
                                 id="lastname"
                                 name="lastname"
@@ -167,7 +176,7 @@ const FormInput = () =>{
                                 placeholder="state"
                                 required
                             />
-                             <input
+                            <input
                                 type="text"
                                 id="country"
                                 name="country"
@@ -177,26 +186,26 @@ const FormInput = () =>{
                                 required
                             />
                             <div className="form-row phno_email" >
-                            <label htmlFor="email">Email: </label><br />
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                placeholder="email"
-                                required
-                            />
-                            <label htmlFor="phno" className="ml-14">Phone:</label ><br />
-                            <input
-                                type="text"
-                                id="phoneno"
-                                name="phoneno"
-                                value={formData.phoneno}
-                                onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
-                                placeholder="phoneno"
-                                required
-                            />
+                                <label htmlFor="email">Email: </label><br />
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    placeholder="email"
+                                    required
+                                />
+                                <label htmlFor="phno" className="ml-14">Phone:</label ><br />
+                                <input
+                                    type="text"
+                                    id="phoneno"
+                                    name="phoneno"
+                                    value={formData.phoneno}
+                                    onChange={(e) => setFormData({ ...formData, phoneno: e.target.value })}
+                                    placeholder="phoneno"
+                                    required
+                                />
                             </div>
                         </div>
                         <div className="form-row" id="customer_form_btn">
@@ -208,7 +217,7 @@ const FormInput = () =>{
                     </div>
                 </form>
             </div>
-    </>
+        </>
     );
 }
 

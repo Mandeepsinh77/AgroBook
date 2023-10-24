@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.js")
-const Customer =require("../models/customer.js")
+const Customer = require("../models/customer.js")
 const Item = require("../models/item.js")
 const { body, validationResult } = require('express-validator');
 
@@ -13,21 +13,18 @@ router.post("/createcustomer", [
     body('email', "Enter a valid Email").isEmail(),
     body('lastname', "Enter a valid lastname").isLength({ min: 3 }),
     body('phoneno', "Enter a valid lastname").isMobilePhone()
+
 ], async (req, res) => {
-    // console.log(req.body);
-    
-    console.log(req.body);
-    console.log("dar");
-    //destructure req.body
-    const { shopkeeperid,firstname,middlename,lastname,address,city,pincode,state,country,email,phoneno } = req.body;
+
+    const { shopkeeperid, firstname, middlename, lastname, address, city, pincode, state, country, email, phoneno } = req.body;
 
     //if userDetail is not follow above validation then there is an error
     const error = validationResult(req)
 
     if (!error.isEmpty()) {
-        console.log("jmj")
+        // console.log("jmj")
         const errorMessages = error.array().map(error => error.msg);
-        console.log(errorMessages)
+        // console.log(errorMessages)
         const message = errorMessages[0];
         return res.status(400).json({ message })
     }
@@ -64,9 +61,10 @@ router.post("/createcustomer", [
 
 router.post("/createitem", [
 ], async (req, res) => {
-    
-    const { itemname,itemcategory,costprice,sellingprice,quantity,units } = req.body;
 
+    const { shopkeeperid, itemname, itemcategory, costprice, sellingprice, quantity, units } = req.body;
+    // console.log("createITEM")
+    // console.log(shopkeeperid)
     try {
         //find user with req email
         let item = await Item.findOne({ itemname: req.body.itemname })
@@ -78,6 +76,7 @@ router.post("/createitem", [
 
         //create user and save into DB
         item = await Item.create({
+            shopkeeperid: shopkeeperid,
             itemname: itemname,
             itemcategory: itemcategory,
             costprice: costprice,
@@ -92,26 +91,33 @@ router.post("/createitem", [
     }
 });
 
-router.get('/fetch_customers',async (req,res)=> {
-    try{
-        const customers = await Customer.find({});
+router.post('/fetch_customers', async (req, res) => {
+    try {
+        const shopkeeperID = req.body.userID;
+        console.log("fetch backend")
+        console.log(shopkeeperID)
+
+        const customers = await Customer.find({ shopkeeperid: shopkeeperID });
         res.json(customers);
     }
-    catch(error){
-        console.error("Error Fetching Customers",error);
-        res.status(500).json({error:"Internal Server Error"});
+    catch (error) {
+        console.error("Error Fetching Customers", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
-router.get('/fetch_items',async (req,res) => {
-    try{
-        const items = await Item.find({});
+router.post('/fetch_items', async (req, res) => {
+    try {
+        const shopkeeperID = req.body.userID;
+        console.log("fetch backend item")
+        console.log(shopkeeperID)
+
+        const items = await Item.find({ shopkeeperid: shopkeeperID });
         res.json(items);
     }
-    catch(error)
-    {
-       console.error("Error Fetching Items");
-       res.status(500).json({error:"Internal Server Error"}); 
+    catch (error) {
+        console.error("Error Fetching Items");
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

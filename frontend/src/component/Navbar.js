@@ -6,7 +6,7 @@ import { AppState } from '../App';
 import { useData } from '../useContext/DataContext';
 import {BsShop} from 'react-icons/bs'
 
-const Navbar = ({ links, setAddCustomer, setContact, setitemList, setAddItem, setcategoryList, setcustomerList,setSell,setPayment  }) => {
+const Navbar = ({ links, setAddCustomer, setContact, setitemList, setAddItem, setcategoryList, setcustomerList,setSell,setPayment,setinvoice  }) => {
 
   const [open, setOpen] = useState(false);
 
@@ -80,6 +80,7 @@ const Navbar = ({ links, setAddCustomer, setContact, setitemList, setAddItem, se
                   setcustomerList(false)
                   setSell(false)
                   setPayment(false)
+                  setinvoice(false)
                   setAddCustomer(true)
                 }} className="bg-[#1F3F49] drop-shadow-xl text-white px-5 py-2 rounded-full hover:bg-white hover:text-green-800 hover:border-2 duration-200 mx-2 ">
                   Customer +
@@ -94,6 +95,7 @@ const Navbar = ({ links, setAddCustomer, setContact, setitemList, setAddItem, se
                   setcustomerList(false)
                   setSell(false)
                   setPayment(false)
+                  setinvoice(false)
                   setAddItem(true)
                 }} className="bg-[#1F3F49] drop-shadow-xl w-[120px] text-white px-5 py-2 rounded-full hover:bg-white hover:text-green-800 hover:border-2 duration-200 mx-2 ">
                   Item +

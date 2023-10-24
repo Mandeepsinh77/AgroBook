@@ -1,9 +1,13 @@
 const mongoose = require("mongoose")
-const itemSchema =  new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
+    shopkeeperid: {
+        type: String,
+        require: true
+    },
     itemname: {
         type: String,
         require: true,
-        unique:true
+        unique: true
     },
     itemcategory: {
         type: String,
@@ -26,5 +30,5 @@ const itemSchema =  new mongoose.Schema({
         require: true
     }
 });
-const Item = mongoose.model('Item',itemSchema);
+const Item = mongoose.model('Item', itemSchema);
 module.exports = Item

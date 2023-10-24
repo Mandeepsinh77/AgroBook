@@ -24,16 +24,20 @@ import ScrollToTop from './component/ScrollToTop';
 import Sell from './Pages/Sell'
 import Analysis from './Pages/Analysis';
 import Payment from "./Pages/Payment.js";
+import Invoice from './Pages/Invoice';
 const AppState = createContext();
 
 
 function App() {
   const [login, setLogin] = useState(false);
 
+  const [UserId, setUserId] = useState("");
+
+
   return (
 
     // <BrowserRouter>
-    <AppState.Provider value={{ login, setLogin }}>
+    <AppState.Provider value={{ login, setLogin, UserId, setUserId }}>
       <div className='app'>
         <Routes>
           {
@@ -58,11 +62,12 @@ function App() {
           <Route path="/forgot" element={<ForgotPsw />} />
           <Route path="/forgotpassword/:id/:token" element={<ResetPsw />} />
           <Route path="/itemList" element={<ItemList />} />
-          <Route path='/footer' element={<Footer/>}/>
-          <Route path='/scrollToTop' element={<ScrollToTop/>}/>
+          <Route path='/footer' element={<Footer />} />
+          <Route path='/scrollToTop' element={<ScrollToTop />} />
           <Route path="/sell" element={<Sell />} />
-          <Route path="/analysis" element={<Analysis/>}/>
+          <Route path="/analysis" element={<Analysis />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/invoice" element={<Invoice />} />
         </Routes>
       </div>
     </AppState.Provider>

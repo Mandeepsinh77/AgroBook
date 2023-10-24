@@ -5,7 +5,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-function Sell({  formData, setAddCustomer, setContact, setitemList, setAddItem, setcustomerList, setcategoryList, setSell, setPayment }) {
+function Sell({  formData, setAddCustomer, setContact, setitemList, setAddItem, setcustomerList, setcategoryList, setSell, setPayment,setinvoice }) {
     var today = new Date();
 
     const navigate = useNavigate();
@@ -163,22 +163,12 @@ function Sell({  formData, setAddCustomer, setContact, setitemList, setAddItem, 
                 setSell(false);
                 setcustomerList(false);
                 setcategoryList(false);
+                setinvoice(false);
                 setPayment(true);
                 navigate(`/?customerName=${formData.customerFirstname} ${formData.customerLastname}&totalCost=${totalCost}&customerPhone=${formData.customerPhone}`);
             }
         });
 
-        // setAddItem(false)
-        // setitemList(false)
-        // setAddCustomer(false)
-        // setContact(false)
-        // setSell(false)
-        // setcustomerList(false);
-        // setcategoryList(false)
-        // setPayment(true)
-
-      
-        // navigate(`/?customerName=${formData.customerFirstname} ${formData.customerLastname}&totalCost=${totalCost}&customerPhone=${formData.customerPhone}`);
     };
 
     return (

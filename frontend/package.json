@@ -16,6 +16,7 @@
     "concurrently": "^8.2.1",
     "emailjs-com": "^3.2.0",
     "font-awesome-icons": "^1.6.0",
+    "mongoose": "^7.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",

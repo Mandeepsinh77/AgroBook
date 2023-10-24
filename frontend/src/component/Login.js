@@ -15,9 +15,9 @@ const Login = () => {
     password: "",
   });
 
-  
+
   const { setData } = useData();
-  const {setshopname} = useData();
+  const { setshopname } = useData();
 
   async function validateData() {
     const url = "http://localhost:4000/auth/login";
@@ -31,6 +31,9 @@ const Login = () => {
     const data = await res.json();
     const username = data.data.user.username;
     const shopname = data.data.user.shopname;
+    const userId = data.data.user.id;
+    useAppState.setUserId(userId)
+
     console.log(username)
     console.log(shopname)
     setData(username);
@@ -53,7 +56,6 @@ const Login = () => {
       // });
 
       navigate("/")
-      
 
 
     } else {
@@ -84,9 +86,9 @@ const Login = () => {
 
 
   return (
-    
+
     <div className="min-h-screen flex items-center justify-center">
-      
+
       <video
         className="absolute top-0 left-0 object-cover w-full h-full opacity-80 z-0"
         loop
